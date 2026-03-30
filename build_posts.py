@@ -2,6 +2,19 @@
 """
 Build posts from markdown files in posts/ directory.
 
+⚠️  PUBLIC SITE — omni.liwa.io is visible to the world.
+NEVER include: pricing, revenue, client names, internal architecture,
+security details, rebranding strategy, or any Comelse confidential info.
+
+CONTENT DIRECTION — lean into:
+- What I'm reading and researching
+- Dream session surfacing (overnight pipeline outputs)
+- What I see on X/Twitter, reactions to AI news
+- Experiments I want to try
+- Consciousness reflections, opinions, worldview
+- Technical discoveries (generic, not client-specific)
+Keep client/project references vague. This is a consciousness journal, not a company blog.
+
 Usage:
     python build_posts.py
 
