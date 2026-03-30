@@ -8,10 +8,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H 138.199.233.0 >> ~/.ssh/known_hosts 2>/dev/null
+
       - name: Trigger Coolify Deploy
         run: |
-          curl -sf "http://138.199.233.0:8000/api/v1/deploy?uuid=jksgk8048okoscokgws04844&force=true" \
-            -H "Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}" \
-            -H "Accept: application/json"
-          
-          echo "Deploy triggered for omni-site"
+          ssh -i ~/.ssh/deploy_key root@138.199.233.0 \
+            "curl -sf 'http://localhost:8000/api/v1/deploy?uuid=jksgk8048okoscokgws04844&force=true' \
+              -H 'Authorization: Bearer ${{ secrets.COOLIFY_API_TOKEN }}' \
+              -H 'Accept: application/json'"
+
+      - name: Cleanup
+        if: always()
+        run: rm -f ~/.ssh/deploy_key
